@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-const LOGO = '/assets/sevinou_logo.png';
+const LOGO = '/assets/sevinou_s_6.png';
 
 const logo = ({ large, dark, noText } = {
   large: false,
@@ -10,9 +10,7 @@ const logo = ({ large, dark, noText } = {
 }) => {
   return (
     <Link href='/'>
-      <a
-        className={}
-      >
+      <a className='sv_logo'>
         <img src={LOGO} alt='Sevinou' />
         {noText
           ? null
