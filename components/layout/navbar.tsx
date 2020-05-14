@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { FC, useCallback, useContext } from 'react';
 import Link from 'next/link';
 import Flag from 'react-country-flag';
-import { Popover, Menu, Dropdown } from 'antd';
-import { withTranslation } from '../../i18n';
+import { Popover, Menu, Dropdown, Switch } from 'antd';
+import useTranslation from '../../hooks/useTranslation';
+import { locales } from '../../translations/config';
 import { useRouter } from 'next/router';
 import Logo from '../logo';
 import Icon, { IconTypeEnum } from '../icon';
 
-const Navlink = ({ href, text }) => {
+interface NavlinkProps {
+  href: string;
+  text: string;
+}
+
+const Navlink: FC<NavlinkProps> = ({ href, text }) => {
+  const { locale } = useTranslation();
   const router = useRouter();
   const className = 'sv_header_nav_option';
   const isSelected = router.pathname === href;
   return (
-    <Link href={href}>
+    <Link href={`/[lang]${href}`} as={`/${locale}${href}`}>
       <a
         className={`${className} ${isSelected ? 'sv_header_selected' : ''}`}
       >
@@ -22,9 +29,15 @@ const Navlink = ({ href, text }) => {
   );
 };
 
-const navbar = ({ t, i18n }) => {
-  
-  const languageMap = {
+
+const Switcher: FC = () => {
+  const { locale } = useTranslation();
+  const router = useRouter();
+  const handleSwitch = useCallback((language: string) => {
+    const regex = new RegExp(`^/(${locales.join('|')})`);
+    router.push(router.pathname, router.asPath.replace(regex, `/${language}`));
+  }, [router]);
+  const languageMap: { [key: string]: string; } = {
     ht: {
       en: 'Angle',
       fr: 'franse',
@@ -40,7 +53,55 @@ const navbar = ({ t, i18n }) => {
       fr: 'French',
       ht: 'Kreole'
     }
-  }[i18n.language];
+  }[locale];
+
+  return (
+    <Dropdown
+      overlay={(
+        <Menu>
+          {['ht', 'fr', 'en'].map(language => {
+            return (
+              <Menu.Item
+                key={language}
+                onClick={() => handleSwitch(language)}
+              >
+                <span className='sv_language'>
+                  <Flag svg={true} countryCode={language === 'en' ? 'us' : language} />
+                  <span className='sv_language_title'>{languageMap[language]}</span>
+                    {locale === language && (
+                      <Icon icon='fa-check' type={IconTypeEnum.light} />
+                    )}
+                  </span>
+                </Menu.Item>
+              );
+            })}
+          </Menu>
+        )}
+      trigger={['click']}
+    >
+      <div className='sv_language_selector_container'>
+        <span
+          className='sv_ls_flag'
+        >
+          <Flag svg={true} countryCode={locale === 'en' ? 'us' : locale} />
+        </span>
+        <span
+          className='sv_ls_lc'
+        >
+          {languageMap[locale]}
+        </span>
+        <span
+          className='sv_ls_icon'
+        >
+          <Icon icon='fa-caret-down' type={IconTypeEnum.solid} />
+        </span>
+      </div>
+    </Dropdown>
+  );
+}
+
+const Navbar = () => {
+  const { t } = useTranslation()
   return (
     <header className='sv_header_wrapper'>
       <nav className='container'>
@@ -48,48 +109,7 @@ const navbar = ({ t, i18n }) => {
           <div className='sv_header_logo'>
             <Logo />
             <div className='sv_language_selector_wrapper'>
-              <Dropdown
-                overlay={(
-                  <Menu>
-                    {['ht', 'fr', 'en'].map(language => {
-                      return (
-                        <Menu.Item
-                          key={language}
-                          onClick={() => i18n.changeLanguage(language)}
-                        >
-                          <span className='sv_language'>
-                            <Flag svg={true} countryCode={language === 'en' ? 'us' : language} />
-                            <span className='sv_language_title'>{languageMap[language]}</span>
-                            {i18n.language === language && (
-                              <Icon icon='fa-check' type={IconTypeEnum.light} />
-                            )}
-                          </span>
-                        </Menu.Item>
-                      );
-                    })}
-                  </Menu>
-                )}
-                trigger={['click']}
-              >
-                <div className='sv_language_selector_container'>
-                  <span
-                    className='sv_ls_flag'
-                  >
-                    <Flag svg={true} countryCode={i18n.language === 'en' ? 'us' : i18n.language} />
-                  </span>
-                  <span
-                    className='sv_ls_lc'
-                  >
-                    {languageMap[i18n.language]}
-                  </span>
-                  <span
-                    className='sv_ls_icon'
-                  >
-                    <Icon icon='fa-caret-down' type={IconTypeEnum.solid} />
-                  </span>
-                </div>
-              </Dropdown>
-              
+              <Switcher />              
             </div>
           </div>
           <div className='sv_nav_menucontainer'>
@@ -97,19 +117,19 @@ const navbar = ({ t, i18n }) => {
               <li className='sv_main_nav_menu_item'>
                 <Navlink
                   href='/'
-                  text={t('nav.home')}
+                  text={t('common.nav.home')}
                 />
               </li>
               <li className='sv_main_nav_menu_item'>
                 <Navlink
                   href='/'
-                  text={t('nav.about')}
+                  text={t('common.nav.about')}
                 />
               </li>
               <li className='sv_main_nav_menu_item'>
                 <Navlink
                   href='/'
-                  text={t('nav.support')}
+                  text={t('common.nav.support')}
                 />
               </li>
             </ul>
@@ -120,8 +140,4 @@ const navbar = ({ t, i18n }) => {
   )
 }
 
-navbar.getInitialProps = async () => ({
-  namesspacesRequired: ['common']
-})
-
-export default withTranslation('common')(navbar);
+export default Navbar;

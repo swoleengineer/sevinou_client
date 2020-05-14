@@ -11,8 +11,8 @@ const en = {
   description: 'We are here to help the families'
 }
 
-export default function(locale) {
-  const { title, description} = { ht, fr, en }[locale] || ht;
+export default function(locale: string) {
+  const { title, description } = { ht, fr, en }[locale] || ht;
   return {
     title, description,
     titleTemplate: '%s | Sevinou',

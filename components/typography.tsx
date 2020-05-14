@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-export const SectionTitle = ({ title, subTitle }) => {
+interface Props {
+  title: string;
+  subTitle?: string;
+}
+export const SectionTitle: FC<Props> = ({ title, subTitle }) => {
   return (
     <div className='sv_section_title'>
       <div className='sv_section_title_text_section'>

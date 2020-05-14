@@ -1,4 +1,4 @@
-export default {
+export const common =  {
   nav: {
     home: 'Home',
     about: 'About',

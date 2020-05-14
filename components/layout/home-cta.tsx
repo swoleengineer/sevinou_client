@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Input, Popover, message } from 'antd';
-import { withTranslation } from '../../i18n';
+import useTranslation from '../../hooks/useTranslation';
 import Icon, { IconTypeEnum } from '../icon';
+
 const { Search } = Input;
 
-const homeCta = ({ t, i18n }) => {
-  const [searchText, setSearchText] = useState();
+
+const HomeCta = () => {
+  const [searchText, setSearchText] = useState<string>();
+  const { t } = useTranslation();
   return (
     <div className='sv_home_cta_wrapper'>
       <div className='row'>
@@ -13,13 +16,13 @@ const homeCta = ({ t, i18n }) => {
           <div className='sv_home_cta_container'>
             
             <div className='sv_home_address_search_container'>
-              <span className='sv_cta_label'>{t('cta.label')}</span>
+              <span className='sv_cta_label'>{t('common.cta.label')}</span>
               <div className='sv_cta_search_input'>
                 <Search
                   size='large'
-                  placeholder={t('cta.placeholder')}
+                  placeholder={t('common.cta.placeholder')}
                   onSearch={() => {
-                    message.info(`${t('cta.result_demo')} - ${searchText}`)
+                    message.info(`${t('common.cta.result_demo')} - ${searchText}`)
                   }}
                   value={searchText}
                   onChange={e => setSearchText(e.target.value)}
@@ -40,7 +43,7 @@ const homeCta = ({ t, i18n }) => {
                 >
                   <span className='sv_cta_actions_action'>
                     <Icon icon='fa-user-md-chat' type={IconTypeEnum.regular} />
-                    <span>{t('cta.contactBtn')}</span>
+                    <span>{t('common.cta.contactBtn')}</span>
                   </span>
                 </Popover>
 
@@ -54,7 +57,7 @@ const homeCta = ({ t, i18n }) => {
                 >
                   <span className='sv_cta_actions_action'>
                     <Icon icon='fa-stethoscope' type={IconTypeEnum.regular} />
-                    <span>{t('cta.symptoms')}</span>
+                    <span>{t('common.cta.symptoms')}</span>
                   </span>
                 </Popover>
               </div>
@@ -66,7 +69,5 @@ const homeCta = ({ t, i18n }) => {
   );
 }
 
-homeCta.getInitialProps = async () => ({
-  namesspacesRequired: ['common']
-})
-export default withTranslation('common')(homeCta);
+
+export default HomeCta;

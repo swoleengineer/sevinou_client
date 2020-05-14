@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Link from 'next/link';
+import useTranslation from '../hooks/useTranslation';
 
 const LOGO = '/assets/sevinou_s_6.png';
 
-const logo = ({ large, dark, noText } = {
+interface LogoProps {
+  large?: boolean;
+  dark?: boolean;
+  noText?: boolean;
+}
+const Logo: FC<LogoProps> = ({ noText } = {
   large: false,
   dark: false,
   noText: false
 }) => {
+  const { locale } = useTranslation();
   return (
-    <Link href='/'>
+    <Link href='/[lang]' as={`/${locale}`}>
       <a className='sv_logo'>
         <img src={LOGO} alt='Sevinou' />
         {noText
@@ -26,4 +33,4 @@ const logo = ({ large, dark, noText } = {
   );
 }
 
-export default logo;
+export default Logo;

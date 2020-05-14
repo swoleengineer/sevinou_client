@@ -6,7 +6,7 @@ export function getInitialLocale(): Locale {
   if (localSetting && isLocale(localSetting)) {
     return localSetting;
   }
-  const [browserSetting] = navigator.language.split('-');
+  const [browserSetting] = navigator.language.split('common.-');
   if (isLocale(browserSetting)) {
     return browserSetting;
   }
