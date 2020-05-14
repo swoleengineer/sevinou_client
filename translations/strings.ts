@@ -15,5 +15,4 @@ const strings: Strings = {
     common: en.common
   }
 }
-console.log({ strings });
 export default strings;

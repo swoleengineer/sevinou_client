@@ -20,7 +20,7 @@ const HomeCta = () => {
               <div className='sv_cta_search_input'>
                 <Search
                   size='large'
-                  placeholder={t('common.cta.placeholder')}
+                  placeholder={t('common.cta.placeholder') as unknown as string}
                   onSearch={() => {
                     message.info(`${t('common.cta.result_demo')} - ${searchText}`)
                   }}

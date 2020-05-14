@@ -65,7 +65,7 @@ const HomeHero: FC = () => {
             <div className='col-md-4 sv_hero_section'>
               <div className='sv_hero_data_wrapper'>
                 <SectionTitle
-                  title={t('common.hero.dataTitle')}
+                  title={t('common.hero.dataTitle') as unknown as string}
                   subTitle={`Last updated ${moment().subtract(1, 'd').fromNow()}`}
                 />
                 <div className='sv_hero_data_section'>
