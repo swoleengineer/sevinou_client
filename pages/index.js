@@ -15,13 +15,13 @@ const Home = () => {
         overflow: 'auto'
       }}
     >
-      <Homehero />
+      {/* <Homehero /> */}
       <section 
         className='sv_home_content_wrapper'
       >
         <div className='container' style={{ position: 'relative' }}>
           <HomeCta />
-          <div className='row' style={{ padding: '125px 0' }}>
+          <div className='row' style={{ padding: '100px 0' }}>
             <div className='col-12'>
               <SectionTitle
                 title='Get Involved'

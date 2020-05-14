@@ -212,7 +212,7 @@ a:hover {
   position: relative;
   border-top: 5px solid rgba(0,0,0,.4);
   box-shadow: 0 0 5px 8px rgba(14,31,36, .07);
-  min-height: calc(100% - 700px);
+  /* min-height: calc(100% - 700px); */
 }
 
 .sv_home_cta_wrapper {
