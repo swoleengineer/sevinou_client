@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useContext } from 'react';
 import Link from 'next/link';
 import Flag from 'react-country-flag';
-import { Popover, Menu, Dropdown, Switch } from 'antd';
+import {  Menu, Dropdown } from 'antd';
 import useTranslation from '../../hooks/useTranslation';
 import { locales } from '../../translations/config';
 import { useRouter } from 'next/router';

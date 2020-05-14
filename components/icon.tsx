@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-export const IconTypeEnum = {
-  solid: 'fas',
-  regular: 'far',
-  light: 'fal',
-  duo: 'fad',
-  brand: 'fab'
+export enum IconTypeEnum {
+  solid = 'fas',
+  regular = 'far',
+  light = 'fal',
+  duo = 'fad',
+  brand = 'fab'
 }
 
-const Icon = (props) => {
-  const { type = IconTypeEnum.duo, style = null, color = false, light = false, icon = '', push = false, intent = 'none', iconSize = undefined, className = '', onClick = () => null, reverse = false } = props;
-  const iconColor = {
+interface Props {
+  type?: IconTypeEnum;
+  style?: React.CSSProperties;
+  color?: boolean;
+  light?: boolean;
+  icon: string;
+  push?: boolean;
+  intent?: string;
+  iconSize?: number;
+  className?: string;
+  onClick?: Function;
+  reverse?: boolean;
+}
+const Icon: FC<Props> = (props) => {
+  const { type = IconTypeEnum.duo, style = null, color = false, light = false, icon = '', push = false, intent = 'none', iconSize = undefined, className = '', reverse = false } = props;
+  const iconColor: any = {
     none: {},
     primary: {
       '--fa-primary-color': reverse ? 'rgba(16,107,163,.85)' : '#106ba3',
@@ -31,7 +44,6 @@ const Icon = (props) => {
   }
   return (
     <i
-      onClick={() => onClick()}
       className={`${type} ${icon} ${(light && color) && intent !== 'none' ? 'fa-swap-opacity' : ''} ${className}`}
       style={{
         ...(iconSize ? { fontSize: `${iconSize}px`} : {}),
