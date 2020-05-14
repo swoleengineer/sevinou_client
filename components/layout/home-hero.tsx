@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FC } from 'react';
 import { Dropdown, Menu, message } from 'antd';
-import * as moment from 'moment';
+import moment from 'moment';
 import useTranslation from '../../hooks/useTranslation';
 import Icon, { IconTypeEnum } from '../icon';
 import { SectionTitle } from '../typography';
